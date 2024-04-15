@@ -85,8 +85,25 @@ blogRouter.get('/:id', async(c) => {
     const post = await prisma.post.findUnique({
         where: {
             id: id
-        }
+        },
+        select: {
+          content: true,
+          title: true,
+          id: true,
+          author: {
+              select: {
+                  name: true
+              }
+          }
+      }
     })
+
+    if(post === null){
+      c.status(403)
+      return c.json({
+        msg: "this post does not exist"
+      })
+    }
 
 	return c.json(post)
 })
