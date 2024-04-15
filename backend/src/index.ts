@@ -21,6 +21,5 @@ app.route('/api/v1/blog', blogRouter)
 
 export default app
 
-//token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU1NDA0ZjU5LTM0OGEtNGMxNy05MDI5LTljNGVjMDhlZWY4YyJ9.LHLbs5G3DWL6JCWsll6JhLd9j3MQjg17CuSw3to9LE8
 
 
