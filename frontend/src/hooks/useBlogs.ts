@@ -18,7 +18,7 @@ export default function useBlogs(){
     useEffect(() => {
         axios.get(`${BACKEND_URL}/blog/bulk`, {
             headers: {
-                Authorization: `bearer ${localStorage.getItem("token")}`
+                Authorization: 'bearer ' + localStorage.getItem("token")
             }
         }).then(res => {
             setData(res.data.posts)

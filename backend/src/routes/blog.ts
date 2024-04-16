@@ -27,6 +27,13 @@ const blogRouter = new Hono<{
       })
     }
     const token = authHeader.split(' ')[1];
+
+    if(!token){
+      c.status(403)
+      return c.json({
+        msg: "invalid token"
+      })
+    }
   
     try {
       const decoded = await verify(token, c.env.JWT_SECRET)

@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import useBlog from "../hooks/useBlog";
+import parse from 'html-react-parser'
 
 function Blog() {
   const {id} = useParams()
@@ -34,7 +35,7 @@ function Blog() {
             <div>{`${Math.ceil(blog?.content.length / 500)} minute(s) read`}</div>
           </div>
           <div className="leading-7">
-            {blog?.content}
+            {parse(blog?.content)}
           </div>
         </div>
         }

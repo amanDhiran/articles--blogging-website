@@ -1,4 +1,6 @@
 import React from "react";
+
+import parse from "html-react-parser";
 import { Link } from "react-router-dom";
 
 interface BlogCardProps {
@@ -31,7 +33,7 @@ function BlogCard({
         </div>
         <div className="mt-2 text-xl lg:text-2xl font-bold">{title}</div>
         <div className="font-light text-slate-400/70 lg:text-lg text-base">
-          {content?.length > 200 ? content.slice(0, 200) + "..." : content}
+          {content?.length > 200 ? content.slice(0, 200) + "..." : parse(content)}
         </div>
         <div className="text-xs text-slate-500/50 mt-3">
           {`${Math.ceil(content?.length / 500)} minute(s) read`}

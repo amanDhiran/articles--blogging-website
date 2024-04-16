@@ -8,7 +8,7 @@ function Home() {
   return (
     <>
       <Navbar />
-      <div className=" lg:mx-28 mx-8 ">
+      <div className=" lg:mx-520 mx-8 ">
         {loading ? (
           <p className="text-secondary">loading...</p> //fix loading
         ) : (
