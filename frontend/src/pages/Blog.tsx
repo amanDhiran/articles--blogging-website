@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import useBlog from "../hooks/useBlog";
 import parse from 'html-react-parser'
+import BlogPostSkeleton from "../components/BlogPostSkeleton";
 
 function Blog() {
   const {id} = useParams()
@@ -18,7 +19,9 @@ function Blog() {
             <IoIosArrowRoundBack /> Go back
           </p>
         </Link>
-        {loading ? <p>loading...</p> : 
+        {loading ? <>
+        <BlogPostSkeleton/>
+        </> : 
           <div className="mt-5 flex flex-col gap-3 lg:max-w-[1100px]">
           <div className="text-5xl font-bold">
             {blog?.title}
