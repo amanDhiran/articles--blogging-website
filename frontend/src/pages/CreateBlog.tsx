@@ -47,7 +47,7 @@ function CreateBlog() {
             headers: {
                 Authorization: "bearer " + localStorage.getItem("token")
         }} )
-        navigate('/home')
+        navigate('/')
       }
 
   return (
@@ -56,7 +56,7 @@ function CreateBlog() {
         <div className="text-secondary lg:mx-24 mx-8 mt-5 ">
           <div className="mt-5 flex flex-col gap-3 lg:max-w-[1100px]">
           <div className="md:text-5xl text-3xl font-bold">
-            <input type="text" className='outline-none bg-primary' placeholder='Title' onChange={(e) => setBlogData({
+            <input type="text" className='w-full outline-none bg-primary' placeholder='Title' onChange={(e) => setBlogData({
                 ...blogData,
                 title: e.target.value
             })}/>

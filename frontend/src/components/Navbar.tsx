@@ -6,7 +6,7 @@ function Navbar({handleClick, fromCreatePage}: {handleClick?: () => void, fromCr
   return (
     <div className='border-b border-gray-700/20 px-4 py-3 md:py-5'>
         <div className='text-secondary flex justify-between items-center lg:mx-16 mx-8 '> 
-            <Link to={'/home'} className=' text-3xl font-bold'>
+            <Link to={'/'} className=' text-3xl font-bold'>
                 Articles
             </Link>
             <div className='flex items-center gap-4'>

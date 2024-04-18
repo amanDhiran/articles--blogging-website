@@ -32,8 +32,10 @@ function BlogCard({
           <div className=" text-slate-400/80">{publishedDate}</div>
         </div>
         <div className="mt-2 text-xl lg:text-2xl font-bold">{title}</div>
-        <div className="font-light text-slate-400/70 lg:text-lg text-base">
-          {content?.length > 200 ? content.slice(0, 200) + "..." : parse(content)}
+        <div className="font-light max-h-20  line-clamp-3 text-slate-400/70 lg:text-lg text-base">
+          {/* {content?.length > 200 ? parse(content) + "..." :  */}
+          {parse(content)}
+           {/* } */}
         </div>
         <div className="text-xs text-slate-500/50 mt-3">
           {`${Math.ceil(content?.length / 500)} minute(s) read`}

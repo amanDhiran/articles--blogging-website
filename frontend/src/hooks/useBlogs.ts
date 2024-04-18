@@ -23,6 +23,8 @@ export default function useBlogs(){
         }).then(res => {
             setData(res.data.posts)
             setLoading(false)
+            // console.log(data);
+            
         }).catch(err => console.log(err, "there was an error while fetching blogs")
         )
         

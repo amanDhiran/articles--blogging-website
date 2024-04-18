@@ -14,7 +14,7 @@ function Blog() {
     <>
       <Navbar />
       <div className="text-secondary lg:mx-24 mx-8 mt-5 ">
-        <Link to="/home">
+        <Link to="/">
           <p className=" flex items-center gap-2 font-light text-slate-200/70 hover:text-secondary">
             <IoIosArrowRoundBack /> Go back
           </p>

@@ -40,7 +40,7 @@ function Login() {
               onClick={async () => {
                 const response = await axios.post(`${BACKEND_URL}/user/signin`, userData)
                 localStorage.setItem("token", response.data.token)
-                navigate("/home")
+                navigate("/")
               }} 
               className='text-sm font-medium bg-secondary text-primary h-10 rounded-md hover:bg-hover'>Sign In</button>
             </div>

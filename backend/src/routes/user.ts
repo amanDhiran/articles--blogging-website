@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import {  sign } from "hono/jwt";
+import {  sign, verify } from "hono/jwt";
 import { signinInput, signupInput } from '@aman.dev/common'
 
 const userRouter = new Hono<{
@@ -81,5 +81,41 @@ userRouter.post("/signin", async (c) => {
     token: token,
   });
 });
+
+userRouter.get('/me', async(c) => {
+  const authHeader = c.req.header('Authorization')
+  
+    //check wether header even exist
+    if(!authHeader || !authHeader.startsWith('bearer ')){
+      c.status(403)
+      return c.json({
+        msg: "user is not authenticated error"
+      })
+    }
+    const token = authHeader.split(' ')[1];
+
+    if(!token){
+      c.status(403)
+      return c.json({
+        msg: "invalid token"
+      })
+    }
+  
+    try {
+      const decoded = await verify(token, c.env.JWT_SECRET)
+      if(decoded){
+        return c.json({
+          isLoggedIn: true,
+                message: "user is logged in"
+        })
+      }
+  } catch (error) {
+      c.status(403)
+      c.json({
+        isLoggedIn: false,
+          message: "user is not authenticated"
+      })
+    }
+})
 
 export default userRouter;

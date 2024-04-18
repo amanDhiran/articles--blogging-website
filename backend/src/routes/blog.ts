@@ -45,7 +45,7 @@ const blogRouter = new Hono<{
     await next()
   } catch (error) {
       c.status(403)
-      c.json({
+      return c.json({
         msg: "authentication error"
       })
     }

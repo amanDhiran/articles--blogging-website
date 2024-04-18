@@ -21,7 +21,7 @@ function Home() {
             <BlogCard
               id={blog.id}
               authorName={blog.author.name || "Anonymous"}
-              content={blog.content}
+              content={blog?.content}
               title={blog.title}
               publishedDate={"15th, April 2024"}
               key={blog.id}
