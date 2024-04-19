@@ -151,40 +151,5 @@ userRouter.get("/details", async (c) => {
   return c.json(user);
 });
 
-// userRouter.get('/me', async(c) => {
-//   const authHeader = c.req.header('Authorization')
-  
-//     //check wether header even exist
-//     if(!authHeader || !authHeader.startsWith('bearer ')){
-//       c.status(403)
-//       return c.json({
-//         msg: "user is not authenticated error"
-//       })
-//     }
-//     const token = authHeader.split(' ')[1];
-
-//     if(!token){
-//       c.status(403)
-//       return c.json({
-//         msg: "invalid token"
-//       })
-//     }
-  
-//     try {
-//       const decoded = await verify(token, c.env.JWT_SECRET)
-//       if(decoded){
-//         return c.json({
-//           isLoggedIn: true,
-//                 message: "user is logged in"
-//         })
-//       }
-//   } catch (error) {
-//       c.status(403)
-//       c.json({
-//         isLoggedIn: false,
-//           message: "user is not authenticated"
-//       })
-//     }
-// })
 
 export default userRouter;

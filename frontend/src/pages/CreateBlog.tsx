@@ -28,7 +28,7 @@ function CreateBlog() {
         
         editorProps: {
           attributes: {
-            class: ' focus:outline-none',
+            class: ' focus:outline-none h-20',
           },
         },
         onUpdate: ({ editor }) => {

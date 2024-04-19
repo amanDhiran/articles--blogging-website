@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Blog from './pages/Blog'
 import CreateBlog from './pages/CreateBlog'
 import ProtectedRoute from './utils/ProtectedRoutes'
+import Profile from './pages/Profile'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/blog/:id' element={<Blog />} />
             <Route path='/new-blog' element={<CreateBlog />} />
+            <Route path='/profile' element={ <Profile /> } />
           </Route>
       </Routes>
     </BrowserRouter>

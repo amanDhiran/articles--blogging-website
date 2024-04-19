@@ -32,6 +32,7 @@ export default function useBlogs(){
 
     return {
         loading,
-        data
+        data,
+        setData
     }
 }
