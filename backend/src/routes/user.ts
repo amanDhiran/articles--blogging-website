@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import {  sign, verify } from "hono/jwt";
-import { signinInput, signupInput } from '@aman.dev/common'
+import { sign, verify } from "hono/jwt";
+import { signinInput, signupInput } from "@aman.dev/common";
 
 const userRouter = new Hono<{
   Bindings: {
@@ -59,9 +59,9 @@ userRouter.post("/signup", async (c) => {
 
   const { success } = signupInput.safeParse(body);
 
-  if(!success){
-    c.status(400)
-    return c.json({error: "invalid input"})
+  if (!success) {
+    c.status(400);
+    return c.json({ error: "invalid input" });
   }
 
   try {
@@ -79,8 +79,8 @@ userRouter.post("/signup", async (c) => {
     });
   } catch (error) {
     c.status(403);
-    
-    return c.json({ error: `error while signing up ${error}`  });
+
+    return c.json({ error: `error while signing up ${error}` });
   }
 });
 
@@ -90,12 +90,12 @@ userRouter.post("/signin", async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
-  
+
   const { success } = signinInput.safeParse(body);
 
-  if(!success){
-    c.status(400)
-    return c.json({error: "invalid input"})
+  if (!success) {
+    c.status(400);
+    return c.json({ error: "invalid input" });
   }
 
   const existingUser = await prisma.user.findUnique({
@@ -129,15 +129,21 @@ userRouter.get("/details", async (c) => {
       id: id,
     },
     select: {
-      id : true,
-  email : true,
-  name  : true,
-  posts: {
-    select: {
-    title: true,
-    content: true
-    }
-  }
+      id: true,
+      email: true,
+      name: true,
+      posts: {
+        select: {
+          title: true,
+          id: true,
+          content: true,
+          author: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
     },
   });
 
@@ -148,8 +154,7 @@ userRouter.get("/details", async (c) => {
     });
   }
 
-  return c.json(user);
+  return c.json({ user });
 });
-
 
 export default userRouter;

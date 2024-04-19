@@ -38,7 +38,6 @@ function Home() {
               title={blog.title}
               publishedDate={"15th, April 2024"}
               key={blog.id}
-              handleDelete= {handleDelete}
             />
           ))
         )}
