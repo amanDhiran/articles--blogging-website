@@ -14,6 +14,42 @@ const userRouter = new Hono<{
   };
 }>();
 
+userRouter.use("/details", async (c, next) => {
+  //get header
+  const authHeader = c.req.header("Authorization");
+
+  //check wether header even exist
+  if (!authHeader || !authHeader.startsWith("bearer ")) {
+    c.status(403);
+    return c.json({
+      msg: "login error",
+    });
+  }
+  const token = authHeader.split(" ")[1];
+
+  if (!token) {
+    c.status(403);
+    return c.json({
+      msg: "invalid token",
+    });
+  }
+
+  try {
+    const decoded = await verify(token, c.env.JWT_SECRET);
+    if (!decoded) {
+      c.status(401);
+      return c.json({ error: "unauthorized" });
+    }
+    c.set("userId", decoded.id);
+    await next();
+  } catch (error) {
+    c.status(403);
+    return c.json({
+      msg: "authentication error",
+    });
+  }
+});
+
 userRouter.post("/signup", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL, //typescript error that it doesnt know type of env variable
@@ -82,40 +118,73 @@ userRouter.post("/signin", async (c) => {
   });
 });
 
-userRouter.get('/me', async(c) => {
-  const authHeader = c.req.header('Authorization')
-  
-    //check wether header even exist
-    if(!authHeader || !authHeader.startsWith('bearer ')){
-      c.status(403)
-      return c.json({
-        msg: "user is not authenticated error"
-      })
-    }
-    const token = authHeader.split(' ')[1];
+userRouter.get("/details", async (c) => {
+  const id = c.get("userId");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env?.DATABASE_URL,
+  }).$extends(withAccelerate());
 
-    if(!token){
-      c.status(403)
-      return c.json({
-        msg: "invalid token"
-      })
+  const user = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+    select: {
+      id : true,
+  email : true,
+  name  : true,
+  posts: {
+    select: {
+    title: true,
+    content: true
     }
+  }
+    },
+  });
+
+  if (user === null) {
+    c.status(403);
+    return c.json({
+      msg: "this user does not exist",
+    });
+  }
+
+  return c.json(user);
+});
+
+// userRouter.get('/me', async(c) => {
+//   const authHeader = c.req.header('Authorization')
   
-    try {
-      const decoded = await verify(token, c.env.JWT_SECRET)
-      if(decoded){
-        return c.json({
-          isLoggedIn: true,
-                message: "user is logged in"
-        })
-      }
-  } catch (error) {
-      c.status(403)
-      c.json({
-        isLoggedIn: false,
-          message: "user is not authenticated"
-      })
-    }
-})
+//     //check wether header even exist
+//     if(!authHeader || !authHeader.startsWith('bearer ')){
+//       c.status(403)
+//       return c.json({
+//         msg: "user is not authenticated error"
+//       })
+//     }
+//     const token = authHeader.split(' ')[1];
+
+//     if(!token){
+//       c.status(403)
+//       return c.json({
+//         msg: "invalid token"
+//       })
+//     }
+  
+//     try {
+//       const decoded = await verify(token, c.env.JWT_SECRET)
+//       if(decoded){
+//         return c.json({
+//           isLoggedIn: true,
+//                 message: "user is logged in"
+//         })
+//       }
+//   } catch (error) {
+//       c.status(403)
+//       c.json({
+//         isLoggedIn: false,
+//           message: "user is not authenticated"
+//       })
+//     }
+// })
 
 export default userRouter;
