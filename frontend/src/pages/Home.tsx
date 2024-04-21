@@ -3,21 +3,10 @@ import Navbar from "../components/Navbar";
 import BlogCard from "../components/BlogCard";
 import useBlogs from "../hooks/useBlogs";
 import BlogCardSkeleton from "../components/BlogCardSkeleton";
-import axios from "axios";
-import BACKEND_URL from "../config";
+import formatDate from "../utils/formatDate";
 
 function Home() {
-  const { loading, data, setData } = useBlogs();
-
-  async function handleDelete(id: string){
-    await axios.delete(`${BACKEND_URL}/blog/${id}`
-    , {
-      headers: {
-          Authorization: 'bearer ' + localStorage.getItem("token")
-      }
-    })
-    setData(data.filter(blog => blog.id !== id))
-  }
+  const { loading, data, } = useBlogs();
 
   return (
     <>
@@ -36,7 +25,7 @@ function Home() {
               authorName={blog.author.name || "Anonymous"}
               content={blog?.content}
               title={blog.title}
-              publishedDate={"15th, April 2024"}
+              publishedDate={formatDate(blog.createdAt)}
               key={blog.id}
             />
           ))

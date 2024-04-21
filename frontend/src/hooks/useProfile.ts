@@ -11,6 +11,7 @@ export interface User {
             content: string;
             title: string;
             id: string;
+            createdAt: string
             author: {
               name: string
             }

@@ -62,9 +62,11 @@ blogRouter.get("/bulk", async (c) => {
         content: true,
         title: true,
         id: true,
+        createdAt: true,
         author: {
           select: {
             name: true,
+            //id or unique username
           },
         },
       },

@@ -50,6 +50,42 @@ userRouter.use("/details", async (c, next) => {
   }
 });
 
+userRouter.use("/me", async (c, next) => {
+  //get header
+  const authHeader = c.req.header("Authorization");
+
+  //check wether header even exist
+  if (!authHeader || !authHeader.startsWith("bearer ")) {
+    c.status(403);
+    return c.json({
+      msg: "login error",
+    });
+  }
+  const token = authHeader.split(" ")[1];
+
+  if (!token) {
+    c.status(403);
+    return c.json({
+      msg: "invalid token",
+    });
+  }
+
+  try {
+    const decoded = await verify(token, c.env.JWT_SECRET);
+    if (!decoded) {
+      c.status(401);
+      return c.json({ error: "unauthorized" });
+    }
+    c.set("userId", decoded.id);
+    await next();
+  } catch (error) {
+    c.status(403);
+    return c.json({
+      msg: "authentication error",
+    });
+  }
+});
+
 userRouter.post("/signup", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL, //typescript error that it doesnt know type of env variable
@@ -156,5 +192,33 @@ userRouter.get("/details", async (c) => {
 
   return c.json({ user });
 });
+
+userRouter.get("/me", async (c) => {
+  const id = c.get("userId");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env?.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+
+  if (user === null) {
+    c.status(403);
+    return c.json({
+      msg: "this user does not exist",
+    });
+  }
+
+  return c.json( {user} );
+});
+
+
 
 export default userRouter;
