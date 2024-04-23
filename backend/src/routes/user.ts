@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { sign, verify } from "hono/jwt";
 import { signinInput, signupInput } from "@aman.dev/common";
-
+import { hashPassword, verifyPassword } from "../utils";
 const userRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string;
@@ -93,6 +93,9 @@ userRouter.post("/signup", async (c) => {
 
   const body = await c.req.json();
 
+  const hashedPassword = await hashPassword(body.password)
+  console.log(hashPassword);
+  
   const { success } = signupInput.safeParse(body);
 
   if (!success) {
@@ -104,7 +107,7 @@ userRouter.post("/signup", async (c) => {
     const createdUser = await prisma.user.create({
       data: {
         email: body.email,
-        password: body.password,
+        password: hashedPassword,
         name: body.name,
       },
     });
@@ -137,16 +140,25 @@ userRouter.post("/signin", async (c) => {
   const existingUser = await prisma.user.findUnique({
     where: {
       email: body.email,
-      password: body.password,
     },
   });
 
   if (!existingUser) {
-    c.status(403);
+    c.status(400);
     return c.json({
       msg: "user does not exist",
     });
   }
+
+  const isMatch = await verifyPassword(body.password, existingUser.password);
+
+  if (!isMatch) {
+    c.status(400);
+    return c.json({
+      msg: "Invalid password",
+    });
+  }
+
   const token = await sign({ id: existingUser.id }, c.env.JWT_SECRET);
 
   return c.json({
