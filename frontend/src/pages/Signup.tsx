@@ -42,7 +42,7 @@ function Signup() {
                 <input type="password" onChange={handleChange} name='password' className='rounded-md px-3 py-2 text-sm bg-primary border border-border ' />
               </div>
               <button 
-              onClick={async (e) => {
+              onClick={async () => {
                 const response = await axios.post(`${BACKEND_URL}/user/signup`, userData)
                 localStorage.setItem("token", response.data.token)
                 navigate("/home")
