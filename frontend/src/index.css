@@ -16,3 +16,26 @@
       --color-secondary: 9 9 11;
     }
   }
+
+  @layer components {
+    .editorJs h1 {
+      @apply text-3xl;
+      @apply font-bold;
+    }
+    .editorJs h2 {
+      @apply text-2xl;
+      @apply font-bold;
+    }
+    .editorJs h3 {
+      @apply text-xl;
+      @apply font-bold;
+    }
+    
+    .editorJs a {
+      @apply text-blue-600 underline;
+    }
+
+    .editorJs blockquote {
+      @apply border-l-2 border-gray-400 pl-5 font-serif;
+    }
+  }

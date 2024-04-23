@@ -37,7 +37,7 @@ function Blog() {
             <div className="h-1 w-1 rounded-full bg-slate-500/60"></div>
             <div>{`${Math.ceil(blog?.content.length / 500)} minute(s) read`}</div>
           </div>
-          <div className="leading-7">
+          <div className="leading-7 editorJs">
             {parse(blog?.content)}
           </div>
         </div>

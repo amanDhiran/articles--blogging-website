@@ -11,9 +11,10 @@ export default {
         secondary: 'rgb(var(--color-secondary))',
         border: 'rgb(var(--color-border))',
         hover: 'rgb(var(--color-hover))',
-      }
+      },
     },
   },
-  plugins: [],
+  plugins: [
+  ],
 }
 

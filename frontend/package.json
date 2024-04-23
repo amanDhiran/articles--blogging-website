@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@aman.dev/common": "^1.0.1",
+    "@blocknote/core": "^0.12.4",
+    "@blocknote/react": "^0.12.4",
+    "@tailwindcss/typography": "^0.5.12",
     "@tiptap/extension-placeholder": "^2.3.0",
     "@tiptap/react": "^2.3.0",
     "@tiptap/starter-kit": "^2.3.0",

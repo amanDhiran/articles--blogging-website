@@ -173,6 +173,7 @@ userRouter.get("/details", async (c) => {
           title: true,
           id: true,
           content: true,
+          createdAt: true,
           author: {
             select: {
               name: true,

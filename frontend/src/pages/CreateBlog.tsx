@@ -9,7 +9,6 @@ import { CreateBlogInput } from '@aman.dev/common'
 import axios from 'axios'
 import BACKEND_URL from '../config'
 import { useNavigate } from 'react-router-dom'
-
 function CreateBlog() {
     const [blogData, setBlogData] = useState<CreateBlogInput>({
         title: "",
@@ -41,8 +40,8 @@ function CreateBlog() {
         
       })
 
+
       const handleSubmit =async() => {
-        // console.log(blogData);
         await axios.post(`${BACKEND_URL}/blog`,blogData,{
             headers: {
                 Authorization: "bearer " + localStorage.getItem("token")
@@ -61,7 +60,7 @@ function CreateBlog() {
                 title: e.target.value
             })}/>
           </div>
-          <div className="leading-7">
+          <div className="leading-7 editorJs text-secondary">
             <TextEditor editor={editor} />
           </div>
         </div>
