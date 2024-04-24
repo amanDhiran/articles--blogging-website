@@ -20,8 +20,18 @@ function Signup() {
     })
   }
   return (
-    <div className='h-[100vh] w-full flex items-center justify-center'>
-      <div className='text-secondary w-[350px] rounded-lg border border-border'>
+    <div className='flex h-screen items-center justify-center'>
+    <div className='flex lg:items-center m-5 lg:m-10 lg:flex-row lg:gap-14 flex-col gap-8 justify-center'>
+      <div className='text-secondary flex flex-col gap-3 lg:gap-12 '>
+        <p className='text-3xl lg:text-6xl font-extrabold'>
+        Write your Mind
+        </p>
+        <p className='text-2xl lg:text-4xl font-extrabold'>
+        Join Today.
+        </p>
+      </div>
+    
+      <div className='text-secondary  rounded-lg border border-border'>
         <div className='p-5 flex flex-col gap-2 items-center'>
           <h1 className='text-2xl font-bold'>Sign Up</h1>
           <p className=' text-gray-400'>Enter your information to create an account</p>
@@ -56,6 +66,7 @@ function Signup() {
           </p>
         </div>
       </div>
+    </div>
     </div>
   )
 }
