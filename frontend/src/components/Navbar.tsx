@@ -12,7 +12,9 @@ export interface User {
 function Navbar({handleClick, fromCreatePage}: {handleClick?: () => void, fromCreatePage?: boolean}) {
   const [show, setShow] =useState(false)
   const [data, setData] = useState<User>()
-  const [loading, setLoading] = useState(true) 
+  // const [loading, setLoading] = useState(true) 
+  const [disabled, setDisabled] = useState(false)
+
 
   const navigate = useNavigate()
 
@@ -23,7 +25,7 @@ function Navbar({handleClick, fromCreatePage}: {handleClick?: () => void, fromCr
       }
   }).then(res => {
       setData(res.data.user)
-      setLoading(false)
+      // setLoading(false)
       // console.log(data);
       
   }).catch(err => console.log(err, "there was an error while fetching blogs")
@@ -44,7 +46,6 @@ function Navbar({handleClick, fromCreatePage}: {handleClick?: () => void, fromCr
             <div className='flex items-center  gap-4'>
                   {fromCreatePage ? <button className='bg-green-600 rounded-md p-2' onClick={handleClick}>Publish</button> : <Link to={'/new-blog'} className='flex font-light text-slate-200/70 hover:text-secondary items-center gap-2'><LuPenSquare className='text-xl' />Write</Link>
                   }
-                {/* <p className='lg:text-lg'>Hello, User</p> */}
                 <div onClick={() => setShow((prev) => !prev) } className="h-8 w-8 items-center bg-border rounded-[50%] flex flex-col justify-center hover:cursor-pointer">{data?.name[0].toUpperCase()}</div>
             </div>
         </div>

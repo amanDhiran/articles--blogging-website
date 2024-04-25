@@ -42,4 +42,7 @@ body{
     .editorJs blockquote {
       @apply border-l-2 border-gray-400 pl-5 font-serif;
     }
+    .editorJs pre {
+      @apply  bg-gray-900/45 rounded-lg py-3 px-4 font-mono;
+    }
   }

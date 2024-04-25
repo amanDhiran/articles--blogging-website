@@ -16,7 +16,6 @@ function CreateBlog() {
         title: "",
         content: ""
       })
-      
     
       const navigate= useNavigate()
 
@@ -26,11 +25,7 @@ function CreateBlog() {
           Placeholder.configure({
             placeholder: 'Tell your story...',
           }),
-          CodeBlock.configure({
-            HTMLAttributes: {
-              class: 'bg-green',
-            },
-          })
+          CodeBlock
         ],
         
         editorProps: {

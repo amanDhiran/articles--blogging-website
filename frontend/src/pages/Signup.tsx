@@ -11,6 +11,7 @@ function Signup() {
     email: ""
   })
   const navigate = useNavigate()
+  const [disabled, setDisabled] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target
@@ -53,10 +54,13 @@ function Signup() {
               </div>
               <button 
               onClick={async () => {
+                // setDisabled(true)
                 const response = await axios.post(`${BACKEND_URL}/user/signup`, userData)
                 localStorage.setItem("token", response.data.token)
-                navigate("/home")
-              }} 
+                // setDisabled(false)
+                navigate("/")
+              }}
+              disabled = {disabled} 
               className='text-sm font-medium bg-secondary text-primary h-10 rounded-md hover:bg-hover'>Sign Up</button>
             </div>
           
