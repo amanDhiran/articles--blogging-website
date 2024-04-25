@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useEditor } from '@tiptap/react'
 import Navbar from '../components/Navbar'
 import TextEditor from '../components/TextEditor'
+import CodeBlock from '@tiptap/extension-code-block'
 
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -9,11 +10,13 @@ import { CreateBlogInput } from '@aman.dev/common'
 import axios from 'axios'
 import BACKEND_URL from '../config'
 import { useNavigate } from 'react-router-dom'
+
 function CreateBlog() {
     const [blogData, setBlogData] = useState<CreateBlogInput>({
         title: "",
         content: ""
       })
+      
     
       const navigate= useNavigate()
 
@@ -23,6 +26,11 @@ function CreateBlog() {
           Placeholder.configure({
             placeholder: 'Tell your story...',
           }),
+          CodeBlock.configure({
+            HTMLAttributes: {
+              class: 'bg-green',
+            },
+          })
         ],
         
         editorProps: {

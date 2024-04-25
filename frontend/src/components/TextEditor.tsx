@@ -6,7 +6,7 @@ import {
   import { FaStrikethrough } from "react-icons/fa";
   import { LuHeading1, LuHeading2, LuHeading3 } from "react-icons/lu";
   import { RiDoubleQuotesL } from "react-icons/ri";
-  
+
   function TextEditor({editor} : {editor:Editor | null}) {
   
     return (
@@ -60,6 +60,13 @@ import {
         >
           <RiDoubleQuotesL className='text-xl' />
         </button>
+
+        <button
+        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        className={editor.isActive('codeBlock') ? 'text-green-500' : ' bg-primary'}
+      >
+        toggleCodeBlock
+      </button>
         </BubbleMenu>}
         <div className='prose text-secondary'>
         <EditorContent editor={editor} />
