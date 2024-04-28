@@ -100,9 +100,18 @@ userRouter.post("/signup", async (c) => {
 
   if (!success) {
     c.status(400);
-    return c.json({ error: "invalid input" });
+    return c.json({ msg: "Invalid Inputs" });
   }
 
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      email: body.email,
+    },
+  });
+  if(existingUser){
+    c.status(400);
+    return c.json({msg: "Email already exists"})
+  }
   try {
     const createdUser = await prisma.user.create({
       data: {
@@ -134,7 +143,7 @@ userRouter.post("/signin", async (c) => {
 
   if (!success) {
     c.status(400);
-    return c.json({ error: "invalid input" });
+    return c.json({ msg: "Invalid inputs" });
   }
 
   const existingUser = await prisma.user.findUnique({
@@ -146,7 +155,7 @@ userRouter.post("/signin", async (c) => {
   if (!existingUser) {
     c.status(400);
     return c.json({
-      msg: "user does not exist",
+      msg: "User does not exist",
     });
   }
 

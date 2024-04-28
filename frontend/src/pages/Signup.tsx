@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { SignupInput } from '@aman.dev/common'
 import axios from 'axios'
 import BACKEND_URL from '../config'
+import Loader from '../components/Loader'
 
 function Signup() {
   const [userData, setUserData] = useState<SignupInput>({
@@ -11,7 +12,8 @@ function Signup() {
     email: ""
   })
   const navigate = useNavigate()
-  const [disabled, setDisabled] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<any>("")
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target
@@ -52,16 +54,27 @@ function Signup() {
                 <label htmlFor="password" className='text-sm font-medium'>Password</label>
                 <input type="password" onChange={handleChange} name='password' className='rounded-md px-3 py-2 text-sm bg-primary border border-border ' />
               </div>
+              {error && <div className="text-red-500 text-xs md:text-sm text-center">{ error }</div>}
               <button 
               onClick={async () => {
-                // setDisabled(true)
-                const response = await axios.post(`${BACKEND_URL}/user/signup`, userData)
-                localStorage.setItem("token", response.data.token)
-                // setDisabled(false)
-                navigate("/")
+                try {
+                  setLoading(true)
+                  const response = await axios.post(`${BACKEND_URL}/user/signup`, userData)
+                  localStorage.setItem("token", response.data.token)
+                  navigate("/")  
+                } catch (error: any) {
+                  if (error.response) {
+                    setError(error.response?.data.msg);
+                  } else {
+                    setError("An unexpected error occured");
+                  }
+                } finally {
+                  setLoading(false); // Reset loading state when request is complete
+                }
+                
               }}
-              disabled = {disabled} 
-              className='text-sm font-medium bg-secondary text-primary h-10 rounded-md hover:bg-hover'>Sign Up</button>
+              disabled={loading}
+              className='text-sm font-medium disabled:bg-slate-100/60 bg-secondary text-primary h-10 rounded-md hover:bg-hover'>{loading? <div className='flex gap-3 items-center justify-center'><Loader className={'w-4 h-4'} /></div> : 'Sign up'}</button>
             </div>
           
           <p className="text-center pt-2 text-sm">
