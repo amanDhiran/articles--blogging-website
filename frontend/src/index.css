@@ -23,24 +23,24 @@ body{
 
   @layer components {
     .editorJs h1 {
-      @apply text-3xl;
+      @apply text-3xl mt-8 mb-3;
       @apply font-bold;
     }
     .editorJs h2 {
-      @apply text-2xl;
+      @apply text-2xl mt-4 mb-2;
       @apply font-bold;
     }
     .editorJs h3 {
-      @apply text-xl;
+      @apply text-xl mt-4 mb-2;
       @apply font-bold;
     }
     
     .editorJs a {
-      @apply text-blue-600 underline;
+      @apply text-green-600 underline;
     }
 
     .editorJs blockquote {
-      @apply border-l-2 border-gray-400 pl-5 font-serif;
+      @apply border-l-2 m-5 border-gray-400 pl-5 font-serif;
     }
     .editorJs pre {
       @apply  bg-gray-900/45 rounded-lg py-3 px-4 font-mono;
