@@ -6,12 +6,13 @@ import {
   import { FaStrikethrough } from "react-icons/fa";
   import { LuHeading1, LuHeading2, LuHeading3 } from "react-icons/lu";
   import { RiDoubleQuotesL } from "react-icons/ri";
+  import { FaCode } from "react-icons/fa";
 
   function TextEditor({editor} : {editor:Editor | null}) {
   
     return (
       <>
-        {editor && <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }} className='border items-center justify-center border-slate-800/60 bg-primary p-1 rounded-md flex gap-2'>
+        {editor && <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }} className='border items-center justify-center border-slate-800/60 bg-primary p-1 rounded-md  flex gap-2'>
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
             className={` ${editor.isActive('bold') ? 'text-green-500' : ' bg-primary'}`}
@@ -65,7 +66,8 @@ import {
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         className={editor.isActive('codeBlock') ? 'text-green-500' : ' bg-primary'}
       >
-        toggleCodeBlock
+        <FaCode className='text-xl'/>
+
       </button>
         </BubbleMenu>}
         <div className='prose text-secondary'>
